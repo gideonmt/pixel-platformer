@@ -1,6 +1,6 @@
-## ▼ ▼ ▼ ▼ ▼ ▼
-## THIS IS A WIP
-## ▲ ▲ ▲ ▲ ▲ ▲
+### 🛑 THIS IS A WIP 🛑
+
+<hr>
 
 # Pixel Platformer Game
 
