@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5.1)
-project(PixelPlatformer VERSION 1.0 DESCRIPTION "A simple 2D platformer game in C" LANGUAGES C)
+project(PixelPlatformer VERSION 0.1.0
+                    DESCRIPTION "A simple 2D platformer game in C"
+                    LANGUAGES C)
 
 # Add SDL2 CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
@@ -16,22 +18,13 @@ find_package(SDL2_ttf REQUIRED)
 
 set(BIN_NAME pixel-platformer)
 
-# Create separate source and header directories
-file(GLOB SRC src/*.c src/Game/*.c)  # Add Game.c to the source list
-file(GLOB HDR src/*.h src/Game/*.h)  # Add Game.h to the header list
+file(GLOB SRC src/*.c)
 
-add_executable(${BIN_NAME} ${SRC} ${HDR})
+add_executable(${BIN_NAME} ${SRC})
 
-# Set include directories
-target_include_directories(${BIN_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_include_directories(${BIN_NAME} PUBLIC ${SDL2_INCLUDE_DIRS})
+target_include_directories(${BIN_NAME} PUBLIC src)
+target_include_directories(${BIN_NAME} PUBLIC ${SDL2_INCLUDE_DIR})
+target_link_libraries(${BIN_NAME} SDL2::Main SDL2::Net SDL2::Image SDL2::Mixer 
+                      SDL2::TTF m)
 
-# Link libraries individually
-target_link_libraries(${BIN_NAME} ${SDL2_LIBRARIES})
-target_link_libraries(${BIN_NAME} ${SDL2_IMAGE_LIBRARIES})
-target_link_libraries(${BIN_NAME} ${SDL2_MIXER_LIBRARIES})
-target_link_libraries(${BIN_NAME} ${SDL2_NET_LIBRARIES})
-target_link_libraries(${BIN_NAME} ${SDL2_TTF_LIBRARIES})
-
-# Copy resources to the output directory
 file(COPY res DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
