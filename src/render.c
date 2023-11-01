@@ -16,8 +16,8 @@ void render(SDL_Renderer *renderer) {
     }
 
     SDL_Rect textRect;
-    textRect.x = 10;
-    textRect.y = 10;
+    textRect.x = (800 - textSurface->w) / 2;
+    textRect.y = (600 - textSurface->h) / 2;
     textRect.w = textSurface->w;
     textRect.h = textSurface->h;
 
