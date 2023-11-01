@@ -1,10 +1,6 @@
 #include "res.h"
 
-TTF_Font *font = NULL;
-SDL_Texture *backgroundTexture = NULL;
-SDL_Texture *textTexture = NULL;
-
-bool initResources(SDL_Renderer *renderer) {
+bool initResources(ResourceManager *resources, SDL_Renderer *renderer) {
     // Initialize SDL_ttf
     if (TTF_Init() == -1) {
         printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
@@ -12,15 +8,15 @@ bool initResources(SDL_Renderer *renderer) {
     }
 
     // Load font
-    font = TTF_OpenFont("res/font/vermin-vibes.ttf", 64);
-    if (font == NULL) {
+    resources->font = TTF_OpenFont("res/font/vermin-vibes.ttf", 24);
+    if (resources->font == NULL) {
         printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
         return false;
     }
 
     // Load background texture
-    backgroundTexture = IMG_LoadTexture(renderer, "res/image/sky.png");
-    if (!backgroundTexture) {
+    resources->backgroundTexture = IMG_LoadTexture(renderer, "res/image/sky.png");
+    if (!resources->backgroundTexture) {
         fprintf(stderr, "IMG_LoadTexture error: %s\n", IMG_GetError());
         return false;
     }
@@ -28,20 +24,20 @@ bool initResources(SDL_Renderer *renderer) {
     return true;
 }
 
-void cleanUpResources() {
-    if (font) {
-        TTF_CloseFont(font);
-        font = NULL;
+void cleanUpResources(ResourceManager *resources) {
+    if (resources->font) {
+        TTF_CloseFont(resources->font);
+        resources->font = NULL;
     }
 
-    if (backgroundTexture) {
-        SDL_DestroyTexture(backgroundTexture);
-        backgroundTexture = NULL;
+    if (resources->backgroundTexture) {
+        SDL_DestroyTexture(resources->backgroundTexture);
+        resources->backgroundTexture = NULL;
     }
 
-    if (textTexture) {
-        SDL_DestroyTexture(textTexture);
-        textTexture = NULL;
+    if (resources->textTexture) {
+        SDL_DestroyTexture(resources->textTexture);
+        resources->textTexture = NULL;
     }
 
     TTF_Quit();

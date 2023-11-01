@@ -6,11 +6,13 @@
 #include <SDL_ttf.h>
 #include <stdbool.h>
 
-extern TTF_Font *font;
-extern SDL_Texture *backgroundTexture;
-extern SDL_Texture *textTexture;
+typedef struct {
+    TTF_Font *font;
+    SDL_Texture *backgroundTexture;
+    SDL_Texture *textTexture;
+} ResourceManager;
 
-bool initResources(SDL_Renderer *renderer);
-void cleanUpResources();
+bool initResources(ResourceManager *resources, SDL_Renderer *renderer);
+void cleanUpResources(ResourceManager *resources);
 
 #endif // RES_H
