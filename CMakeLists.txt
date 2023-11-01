@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.5.1)
-project(PixelPlatformer VERSION 1.0
-                     DESCRIPTION "A simple 2D platformer game in C."
-                     LANGUAGES C)
+project(PixelPlatformer VERSION 1.0 DESCRIPTION "A simple 2D platformer game in C" LANGUAGES C)
 
 # Add SDL2 CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
@@ -19,8 +17,8 @@ find_package(SDL2_ttf REQUIRED)
 set(BIN_NAME pixel-platformer)
 
 # Create separate source and header directories
-file(GLOB SRC src/*.c)
-file(GLOB HDR src/*.h)
+file(GLOB SRC src/*.c src/Game/*.c)  # Add Game.c to the source list
+file(GLOB HDR src/*.h src/Game/*.h)  # Add Game.h to the header list
 
 add_executable(${BIN_NAME} ${SRC} ${HDR})
 

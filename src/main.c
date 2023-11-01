@@ -1,7 +1,8 @@
 #include <SDL.h>
+#include "game/game.h"
 
 int main(int argc, char* argv[]) {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
         return 1;
     }
@@ -23,6 +24,9 @@ int main(int argc, char* argv[]) {
         return 3;
     }
 
+    // Initialize the game
+    Game* game = Game_Create(renderer);
+
     // Game loop
     int quit = 0;
     while (!quit) {
@@ -34,14 +38,18 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        // Clear the screen
-        SDL_RenderClear(renderer);
+        // Update the game
+        Game_Update(game);
+
+        // Render the game
+        Game_Render(game);
 
         // Present the renderer
         SDL_RenderPresent(renderer);
     }
 
     // Cleanup and quit
+    Game_Destroy(game);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
