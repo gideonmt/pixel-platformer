@@ -14,5 +14,7 @@ typedef struct {
 
 bool initResources(ResourceManager *resources, SDL_Renderer *renderer);
 void cleanUpResources(ResourceManager *resources);
+SDL_Texture *loadImageTexture(SDL_Renderer *renderer, const char *path);
+SDL_Texture *getTextTexture(ResourceManager *resources, SDL_Renderer *renderer, const char *text, SDL_Color textColor);
 
 #endif // RES_H

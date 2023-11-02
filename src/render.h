@@ -4,6 +4,6 @@
 #include <SDL.h>
 #include "res.h"
 
-void render(SDL_Renderer *renderer, ResourceManager *resources);
+void render(SDL_Renderer *renderer, ResourceManager *resources, SDL_Color textColor);
 
 #endif // RENDER_H

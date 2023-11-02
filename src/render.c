@@ -1,37 +1,39 @@
 #include "render.h"
 
-void render(SDL_Renderer *renderer, ResourceManager *resources) {
+// Cached textures
+static SDL_Texture *cachedBackgroundTexture = NULL;
+static SDL_Texture *cachedTextTexture = NULL;
+
+void render(SDL_Renderer *renderer, ResourceManager *resources, SDL_Color textColor)
+{
+    // Clear the renderer
     SDL_RenderClear(renderer);
 
-    SDL_RenderCopy(renderer, resources->backgroundTexture, NULL, NULL);
+    // Render the background texture (if not cached)
+    if (!cachedBackgroundTexture)
+    {
+        cachedBackgroundTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("res/image/sky.png"));
+    }
+    SDL_RenderCopy(renderer, cachedBackgroundTexture, NULL, NULL);
 
-    SDL_Color textColor = { 255, 255, 255, 255 };
-
-    SDL_Surface *textSurface = TTF_RenderText_Solid(resources->font, "Pixel Platformer", textColor);
-    if (!textSurface) {
-        fprintf(stderr, "TTF_RenderText_Solid error: %s\n", TTF_GetError());
-        return;
+    if (!cachedTextTexture)
+    {
+        cachedTextTexture = getTextTexture(resources, renderer, "Pixel Platformer", textColor);
     }
 
-    resources->textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    if (!resources->textTexture) {
-        fprintf(stderr, "SDL_CreateTextureFromSurface error: %s\n", SDL_GetError());
-        SDL_FreeSurface(textSurface);
-        return;
-    }
+    int textWidth, textHeight;
+    SDL_QueryTexture(cachedTextTexture, NULL, NULL, &textWidth, &textHeight);
 
-    int centerX = (800 - textSurface->w) / 2;
-    int centerY = (600 - textSurface->h) / 2;
+    int centerX = (800 - textWidth) / 2;
+    int centerY = (600 - textHeight) / 2;
 
     SDL_Rect textRect;
     textRect.x = centerX;
     textRect.y = centerY;
-    textRect.w = textSurface->w;
-    textRect.h = textSurface->h;
+    textRect.w = textWidth;
+    textRect.h = textHeight;
 
-    SDL_RenderCopy(renderer, resources->textTexture, NULL, &textRect);
-
-    SDL_FreeSurface(textSurface);
+    SDL_RenderCopy(renderer, cachedTextTexture, NULL, &textRect);
 
     SDL_RenderPresent(renderer);
 }
