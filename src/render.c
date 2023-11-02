@@ -24,8 +24,8 @@ void render(SDL_Renderer *renderer, ResourceManager *resources, SDL_Color textCo
     int textWidth, textHeight;
     SDL_QueryTexture(cachedTextTexture, NULL, NULL, &textWidth, &textHeight);
 
-    int centerX = (800 - textWidth) / 2;
-    int centerY = (600 - textHeight) / 2;
+    int centerX = (864 - textWidth) / 2;
+    int centerY = (555 - textHeight) / 2;
 
     SDL_Rect textRect;
     textRect.x = centerX;

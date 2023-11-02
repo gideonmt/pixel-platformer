@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include "res.h"
 #include "render.h"
+#include "components/menu.h"
 
 #define TARGET_FPS 60
 
@@ -24,7 +25,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    SDL_Window *window = SDL_CreateWindow("Pixel Platformer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, 0);
+    SDL_Window *window = SDL_CreateWindow("Pixel Platformer", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 864, 555, 0);
     if (!window)
     {
         fprintf(stderr, "SDL_CreateWindow error: %s\n", SDL_GetError());
@@ -56,8 +57,9 @@ int main(int argc, char *argv[])
     const Uint32 frameDelay = 1000 / TARGET_FPS;
     Uint32 frameStart, frameTime;
 
+    initMenu(renderer, TTF_OpenFont("res/font/pfont.ttf", 36));
+
     SDL_Event e;
-    int quit = 0;
 
     SDL_Color textColor = {0, 0, 0};
 
@@ -70,10 +72,18 @@ int main(int argc, char *argv[])
             if (e.type == SDL_QUIT)
             {
                 quit = 1;
+            } else {
+                handleMenuEvents(&e);
             }
         }
 
         render(renderer, &resources, textColor);
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        renderMenu();
+
+        // Present the renderer
+        SDL_RenderPresent(renderer);
 
         SDL_RenderClear(renderer);
 

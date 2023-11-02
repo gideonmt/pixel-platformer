@@ -18,7 +18,7 @@ find_package(SDL2_ttf REQUIRED)
 
 set(BIN_NAME pixel-platformer)
 
-file(GLOB SRC src/*.c)
+file(GLOB SRC src/*.c src/components/*.c)
 
 add_executable(${BIN_NAME} ${SRC})
 

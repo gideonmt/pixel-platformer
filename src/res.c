@@ -8,8 +8,14 @@ bool initResources(ResourceManager *resources, SDL_Renderer *renderer) {
     }
 
     // Load font
-    resources->font = TTF_OpenFont("res/font/vermin-vibes.ttf", 64);
-    if (resources->font == NULL) {
+    resources->hfont = TTF_OpenFont("res/font/vermin-vibes.ttf", 64);
+    if (resources->hfont == NULL) {
+        printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
+        return false;
+    }
+
+    resources->pfont = TTF_OpenFont("res/font/pfont.ttf", 36);
+    if (resources->pfont == NULL) {
         printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
         return false;
     }
@@ -26,9 +32,14 @@ bool initResources(ResourceManager *resources, SDL_Renderer *renderer) {
 
 void cleanUpResources(ResourceManager *resources) {
     printf("Cleaning up resources...\n");
-    if (resources->font) {
-        TTF_CloseFont(resources->font);
-        resources->font = NULL;
+    if (resources->hfont) {
+        TTF_CloseFont(resources->hfont);
+        resources->hfont = NULL;
+    }
+    
+    if (resources->pfont) {
+        TTF_CloseFont(resources->pfont);
+        resources->pfont = NULL;
     }
 
     if (resources->backgroundTexture) {
@@ -58,14 +69,25 @@ SDL_Texture *loadImageTexture(SDL_Renderer *renderer, const char *path) {
 }
 
 SDL_Texture *getTextTexture(ResourceManager *resources, SDL_Renderer *renderer, const char *text, SDL_Color textColor) {
-    SDL_Surface *textSurface = TTF_RenderText_Solid(resources->font, text, textColor);
-    if (!textSurface) {
+    // hfont
+    SDL_Surface *hTextSurface = TTF_RenderText_Solid(resources->hfont, text, textColor);
+    if (!hTextSurface) {
         fprintf(stderr, "TTF_RenderText_Solid error: %s\n", TTF_GetError());
         return NULL;
     }
 
-    SDL_Texture *textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface);
+    SDL_Texture *hTextTexture = SDL_CreateTextureFromSurface(renderer, hTextSurface);
+    SDL_FreeSurface(hTextSurface);
 
-    return textTexture;
+    // pfont
+    SDL_Surface *pTextSurface = TTF_RenderText_Solid(resources->pfont, text, textColor);
+    if (!pTextSurface) {
+        fprintf(stderr, "TTF_RenderText_Solid error: %s\n", TTF_GetError());
+        return NULL;
+    }
+
+    SDL_Texture *pTextTexture = SDL_CreateTextureFromSurface(renderer, pTextSurface);
+    SDL_FreeSurface(pTextSurface);
+
+    return hTextTexture; return pTextTexture;
 }

@@ -7,7 +7,8 @@
 #include <stdbool.h>
 
 typedef struct {
-    TTF_Font *font;
+    TTF_Font *hfont;
+    TTF_Font *pfont;
     SDL_Texture *backgroundTexture;
     SDL_Texture *textTexture;
 } ResourceManager;
