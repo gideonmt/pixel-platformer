@@ -72,20 +72,24 @@ int main(int argc, char *argv[])
             if (e.type == SDL_QUIT)
             {
                 quit = 1;
-            } else {
+            }
+            else
+            {
                 handleMenuEvents(&e);
             }
         }
 
+        // Clear the screen
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        // Render game
         render(renderer, &resources, textColor);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         renderMenu();
 
         // Present the renderer
         SDL_RenderPresent(renderer);
-
-        SDL_RenderClear(renderer);
 
         frameTime = SDL_GetTicks() - frameStart;
 

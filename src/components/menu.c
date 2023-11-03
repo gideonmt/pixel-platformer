@@ -15,9 +15,9 @@ void exitAction(void)
     quit = 1;
 }
 
-Button startButton = {"Start", 402, 350, 80, 20, SELECTED, startAction};
-Button infoButton = {"Info", 402, 400, 80, 20, UNSELECTED, infoAction};
-Button exitButton = {"Exit", 402, 450, 80, 20, UNSELECTED, exitAction};
+Button startButton = {"Start", 402, 320, 80, 20, SELECTED, startAction};
+Button infoButton = {"Info", 402, 360, 80, 20, UNSELECTED, infoAction};
+Button exitButton = {"Exit", 402, 400, 80, 20, UNSELECTED, exitAction};
 
 TTF_Font *menuFont = NULL;
 SDL_Renderer *menuRenderer = NULL;
@@ -90,7 +90,7 @@ void drawButton(Button *button)
 {
     SDL_Rect textRect = {button->x, button->y, button->width, button->height};
     SDL_Color textColor = {255, 255, 255};
-    SDL_Color selectedTextColor = {0, 10, 100};
+    SDL_Color selectedTextColor = {30, 60, 160};
 
     SDL_Color renderColor = (button->state == SELECTED) ? selectedTextColor : textColor;
 
