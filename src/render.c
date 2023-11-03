@@ -6,10 +6,8 @@ static SDL_Texture *cachedTextTexture = NULL;
 
 void render(SDL_Renderer *renderer, ResourceManager *resources, SDL_Color textColor)
 {
-    // Clear the renderer
     SDL_RenderClear(renderer);
 
-    // Render the background texture (if not cached)
     if (!cachedBackgroundTexture)
     {
         cachedBackgroundTexture = SDL_CreateTextureFromSurface(renderer, IMG_Load("res/image/sky.png"));
@@ -34,6 +32,4 @@ void render(SDL_Renderer *renderer, ResourceManager *resources, SDL_Color textCo
     textRect.h = textHeight;
 
     SDL_RenderCopy(renderer, cachedTextTexture, NULL, &textRect);
-
-    SDL_RenderPresent(renderer);
 }

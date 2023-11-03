@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
         }
 
         // Clear the screen
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 100, 0, 0, 255);
         SDL_RenderClear(renderer);
 
         // Render game

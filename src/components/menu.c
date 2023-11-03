@@ -4,10 +4,12 @@ int quit = 0;
 
 void startAction(void)
 {
+    
 }
 
 void infoAction(void)
 {
+
 }
 
 void exitAction(void)
