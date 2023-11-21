@@ -1,6 +1,8 @@
 #include "menu.h"
 
 int quit = 0;
+TTF_Font *menuFont = NULL;
+SDL_Renderer *menuRenderer = NULL;
 
 void startAction(void)
 {
@@ -9,7 +11,8 @@ void startAction(void)
 
 void infoAction(void)
 {
-
+    SDL_DestroyRenderer(menuRenderer);
+    
 }
 
 void exitAction(void)
@@ -20,9 +23,6 @@ void exitAction(void)
 Button startButton = {"Start", 402, 320, 80, 20, SELECTED, startAction};
 Button infoButton = {"Info", 402, 360, 80, 20, UNSELECTED, infoAction};
 Button exitButton = {"Exit", 402, 400, 80, 20, UNSELECTED, exitAction};
-
-TTF_Font *menuFont = NULL;
-SDL_Renderer *menuRenderer = NULL;
 
 void initMenu(SDL_Renderer *renderer, TTF_Font *pfont)
 {
